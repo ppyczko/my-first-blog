@@ -16,3 +16,12 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PostRecord(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    modified_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.post} - {self.user}"

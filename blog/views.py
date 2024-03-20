@@ -2,9 +2,10 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.urls import reverse
 
-from .models import Post
+from .models import Post, PostRecord
 from .forms import PostForm
 
 
@@ -12,62 +13,44 @@ class PostListView(ListView):
     model = Post
     paginate_by = 10
 
-    def get_queryset(self) -> QuerySet[Any]:
+    def get_queryset(self) -> QuerySet[Post]:
         queryset = super().get_queryset()
-        return Post.objects.filter(published_date__lte=timezone.now()).order_by(
+        return queryset.filter(published_date__lte=timezone.now()).order_by(
             "published_date"
         )
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        return context
-
-
-# def post_list(request):
-#     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by(
-#         "published_date"
-#     )
-#     return render(request, "blog/post_list.html", {"posts": posts})
 
 
 class PostDetailView(DetailView):
     model = Post
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        print(self)
-        return context
+
+class PostCreateView(CreateView):
+    model = Post
+    form_class = PostForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.published_date = timezone.now()
+        result = super().form_valid(form)
+        return result
+
+    def get_success_url(self) -> str:
+        return reverse("post_detail", kwargs={"pk": self.object.pk})
 
 
-# def post_detail(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#     return render(request, "blog/post_detail.html", {"post": post})
+class PostUpdateView(UpdateView):
+    model = Post
+    form_class = PostForm
 
+    def form_valid(self, form):
+        form.instance.published_date = timezone.now()
+        result = super().form_valid(form)
+        # We save a new register after modifying the post
+        register = PostRecord()
+        register.post = self.object
+        register.user = self.object.author
+        register.save()
+        return result
 
-def post_new(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            return redirect("post_detail", pk=post.pk)
-    else:
-        form = PostForm()
-    return render(request, "blog/post_edit.html", {"form": form})
-
-
-def post_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            return redirect("post_detail", pk=post.pk)
-    else:
-        form = PostForm(instance=post)
-    return render(request, "blog/post_edit.html", {"form": form})
+    def get_success_url(self) -> str:
+        return reverse("post_detail", kwargs={"pk": self.object.pk})
