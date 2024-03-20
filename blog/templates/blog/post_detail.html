@@ -7,11 +7,14 @@
       {% endif %}
     </aside>
     {% if post.published_date %}
-      <time class="date me-3">
+      <time class="date mr-3">
         {{ post.published_date }}
       </time>
     {% endif %}
     <h2>{{ post.title }}</h2>
     <p>{{ post.text|linebreaksbr }}</p>
+    <p class="text-muted">
+      Author: <a href="{% url 'author_detail' pk=post.author.pk %}">{{ post.author|linebreaksbr }}</a>
+    </p>
   </article>
 {% endblock content %}

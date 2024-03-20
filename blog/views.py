@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 from .models import Post, PostRecord
 from .forms import PostForm
@@ -15,13 +16,19 @@ class PostListView(ListView):
 
     def get_queryset(self) -> QuerySet[Post]:
         queryset = super().get_queryset()
-        return queryset.filter(published_date__lte=timezone.now()).order_by(
-            "published_date"
+        queryset = (
+            queryset.filter(published_date__lte=timezone.now())
+            .order_by("published_date")
+            .select_related("author")
         )
+        return queryset
 
 
 class PostDetailView(DetailView):
     model = Post
+
+    def get_queryset(self):
+        return super().get_queryset().select_related("author")
 
 
 class PostCreateView(CreateView):
@@ -54,3 +61,16 @@ class PostUpdateView(UpdateView):
 
     def get_success_url(self) -> str:
         return reverse("post_detail", kwargs={"pk": self.object.pk})
+
+
+# Author views
+class AuthorDetailView(DetailView):
+    model = User
+    template_name = "blog/author_detail.html"
+    context_object_name = "author"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.object.__dict__)
+        context["author_posts"] = self.object.records.all()
+        return context

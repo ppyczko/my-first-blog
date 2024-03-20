@@ -20,7 +20,9 @@ class Post(models.Model):
 
 class PostRecord(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="records"
+    )
     modified_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

@@ -1,0 +1,6 @@
+{% extends "blog/base.html" %}
+{% block content %}
+  <h2>Author details</h2>
+  {{ author }}
+  {% for post in author_posts %}<h2>{{ post }}</h2>{% endfor %}
+{% endblock content %}
