@@ -1,7 +1,6 @@
-from django.shortcuts import render
 from django.contrib.auth import views as auth_views
+
 from .forms import LoginForm
-from django.urls import reverse
 
 
 class LoginUserView(auth_views.LoginView):
@@ -9,3 +8,7 @@ class LoginUserView(auth_views.LoginView):
     authentication_form = LoginForm
     next_page = "blog-redirect"
     redirect_authenticated_user = True
+
+
+class LogoutUser(auth_views.LogoutView):
+    template_name = "users/logout.html"

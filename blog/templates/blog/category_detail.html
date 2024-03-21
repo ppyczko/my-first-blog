@@ -12,6 +12,8 @@
             <p>Published Date: {{ post.published_date }}</p>
           </div>
         </div>
+      {% empty %}
+        <p class="alert alert-info w-100 text-center">No existing posts for the {{ category }} category.</p>
       {% endfor %}
     </div>
   </div>

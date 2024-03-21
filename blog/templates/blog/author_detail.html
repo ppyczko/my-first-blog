@@ -16,6 +16,8 @@
             <p>Published Date: {{ post.published_date }}</p>
           </div>
         </div>
+      {% empty %}
+        <p class="alert alert-info">This author hasn't published any posts yet.</p>
       {% endfor %}
     </div>
   </div>
