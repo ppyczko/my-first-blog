@@ -1,3 +1,4 @@
+{# djlint:off H023 #}
 {% extends "blog/base.html" %}
 {% block content %}
   <div class="container">
@@ -5,13 +6,28 @@
     <div class="row">
       {% for post in posts_by_category %}
         <div class="col-sm-6 mb-2">
-          <div class="col-12 border border-2 border-primary rounded p-2 h-100">
+          <div class="col-12 border border-2 border-secondary rounded p-3 h-100 bg-light text-dark">
             <h5>{{ post }}</h5>
             <p class="mb-0">Title: {{ post.title }}</p>
             <p>Published Date: {{ post.published_date }}</p>
           </div>
         </div>
       {% endfor %}
+    </div>
+  </div>
+  <div class="container">
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      </span>
     </div>
   </div>
 {% endblock content %}

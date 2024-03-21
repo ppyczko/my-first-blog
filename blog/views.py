@@ -7,14 +7,31 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 
 from .forms import PostForm
 from .models import Post, PostRecord
+from .filters import PostFilter
 
 
-class PostListView(LoginRequiredMixin, ListView):
+class FilteredListView(ListView):
+    filterset_class = None
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = self.filterset_class(self.request.GET, queryset=queryset)
+        return self.filterset.qs.distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["filterset"] = self.filterset
+        return context
+
+
+class PostListView(LoginRequiredMixin, FilteredListView):
     model = Post
     paginate_by = 10
+    filterset_class = PostFilter
 
     def get_queryset(self) -> QuerySet[Post]:
         queryset = super().get_queryset()
@@ -65,11 +82,11 @@ class PostUpdateView(UpdateView):
         return reverse("post_detail", kwargs={"pk": self.object.pk})
 
 
-# Author views
 class AuthorDetailView(DetailView):
     model = User
     template_name = "blog/author_detail.html"
     context_object_name = "author"
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -77,15 +94,15 @@ class AuthorDetailView(DetailView):
         return context
 
 
-class CategoryDetailView(ListView):
+class CategoryListView(ListView):
     model = Post
     template_name = "blog/category_detail.html"
     pk_url_kwarg = "category"
     context_object_name = "posts_by_category"
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        print(self.kwargs)
         queryset = Post.objects.filter(category=self.kwargs["category"])
         return queryset
 

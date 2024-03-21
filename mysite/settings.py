@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     "crispy_bootstrap4",
     "debug_toolbar",
     "django_extensions",
+    "django_tables2",
+    "django_filters",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
