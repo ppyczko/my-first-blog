@@ -1,14 +1,9 @@
 {% extends "blog/base.html" %}
 {% block content %}
   <div class="container">
-    <h2>Author details</h2>
-    <p>Author: {{ author }}</p>
-    <p>Email: {{ author.email }}</p>
-  </div>
-  <h3 class="text-center mt-4 mb-2">Your Posts</h3>
-  <div class="container">
+    <h2 class="text-center mb-3">Posts from the {{ category }} category</h2>
     <div class="row">
-      {% for post in author_posts %}
+      {% for post in posts_by_category %}
         <div class="col-sm-6 mb-2">
           <div class="col-12 border border-2 border-primary rounded p-2 h-100">
             <h5>{{ post }}</h5>

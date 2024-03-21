@@ -17,9 +17,10 @@ class PostForm(forms.ModelForm):
         self.helper.layout = Layout(
             Row(Column(Field("title", autofocus=True))),
             Row(Column("text")),
+            Row(Column("category")),
             Submit("submit", "Save", css_class="btn btn-secondary btn-lg w-100"),
         )
 
     class Meta:
         model = Post
-        fields = ("title", "text")
+        fields = ("title", "text", "category")

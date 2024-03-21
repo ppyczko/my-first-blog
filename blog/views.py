@@ -1,16 +1,18 @@
 from typing import Any
-from django.db.models.query import QuerySet
-from django.shortcuts import render, get_object_or_404, redirect
-from django.utils import timezone
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from django.urls import reverse
+
 from django.contrib.auth.models import User
+from django.db.models.query import QuerySet
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.utils import timezone
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Post, PostRecord
 from .forms import PostForm
+from .models import Post, PostRecord
 
 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
     model = Post
     paginate_by = 10
 
@@ -71,6 +73,23 @@ class AuthorDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.object.__dict__)
-        context["author_posts"] = self.object.records.all()
+        context["author_posts"] = self.object.post_set.all()
+        return context
+
+
+class CategoryDetailView(ListView):
+    model = Post
+    template_name = "blog/category_detail.html"
+    pk_url_kwarg = "category"
+    context_object_name = "posts_by_category"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        print(self.kwargs)
+        queryset = Post.objects.filter(category=self.kwargs["category"])
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = self.kwargs["category"]
         return context

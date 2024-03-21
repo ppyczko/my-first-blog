@@ -4,9 +4,19 @@ from django.utils import timezone
 
 
 class Post(models.Model):
+    categories = (
+        ("stories", "Stories"),
+        ("films", "Films"),
+        ("books", "Books"),
+        ("sports", "Sports"),
+        ("fashion", "Fashion"),
+        ("politics", "Politics"),
+    )
+
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
+    category = models.CharField(max_length=15, choices=categories, default="stories")
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
@@ -20,9 +30,7 @@ class Post(models.Model):
 
 class PostRecord(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="records"
-    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     modified_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
