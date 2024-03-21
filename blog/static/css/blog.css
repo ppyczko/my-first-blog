@@ -72,3 +72,8 @@ h4 {
     color: #FFFFFF;
     background-color: #C25100;
 }
+
+/* Login */
+.login-form {
+    max-width: 500px;
+}

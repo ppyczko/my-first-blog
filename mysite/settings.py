@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "django_tables2",
     "django_filters",
+    "users.apps.UsersConfig",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"

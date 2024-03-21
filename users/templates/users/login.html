@@ -1,0 +1,7 @@
+{# djlint:off H030, H031 #}
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <h2 class="text-center mb-3">Welcome To Our Blog</h2>
+  <div class="login-form container border border-secondary rounded p-3">{% crispy form %}</div>
+{% endblock content %}

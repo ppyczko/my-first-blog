@@ -1,17 +1,13 @@
-from typing import Any
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models.query import QuerySet
-from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
 
+from .filters import PostFilter
 from .forms import PostForm
 from .models import Post, PostRecord
-from .filters import PostFilter
 
 
 class FilteredListView(ListView):
