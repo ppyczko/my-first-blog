@@ -7,4 +7,7 @@
   <p class="alert alert-info text-center mt-4">
     Haven't signed up yet? <a href="{% url "users:signup" %}">Click here!</a>
   </p>
+  <p class="text-muted">
+    Forgot your password? Reset it <a href="{% url "users:password_reset" %}">here</a>
+  </p>
 {% endblock content %}

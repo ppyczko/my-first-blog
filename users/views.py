@@ -11,7 +11,7 @@ from .forms import LoginForm, SignUpForm
 class LoginUserView(auth_views.LoginView):
     template_name = "users/login.html"
     authentication_form = LoginForm
-    next_page = "users:blog-redirect"
+    next_page = "blog:post_list"
     redirect_authenticated_user = True
 
 
@@ -34,3 +34,12 @@ class SignUpUser(CreateView):
         response = super().form_valid(form)
         login(self.request, self.object)
         return response
+
+
+class PasswordReset(auth_views.PasswordResetView):
+    template_name = "users/password_reset_form.html"
+    success_url = reverse_lazy("users:password_reset_done")
+
+
+class PasswordResetDone(auth_views.PasswordResetDoneView):
+    template_name = "users/password_reset_done.html"

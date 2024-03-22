@@ -92,4 +92,14 @@ h4 {
         font-size: 30pt;
         text-decoration: none;
     }
+
+    .page-header .navbar {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .dropdown-menu-right {
+        left: 50%;
+        transform: translateX(-50%);
+    }
   }
