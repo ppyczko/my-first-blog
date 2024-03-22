@@ -18,4 +18,12 @@
       Author: <a href="{% url 'blog:author_detail' pk=post.author.pk %}">{{ post.author|linebreaksbr }}</a>
     </p>
   </article>
+  {% if related_posts %}
+    <h3>Related Posts</h3>
+    <hr>
+    {% for rpost in related_posts %}
+      <a href="{% url "blog:post_detail" pk=rpost.related_post.pk %}">{{ rpost.related_post }}</a>
+      <hr>
+    {% endfor %}
+  {% endif %}
 {% endblock content %}
