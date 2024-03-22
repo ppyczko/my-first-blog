@@ -4,4 +4,7 @@
 {% block content %}
   <h2 class="text-center mb-3">Welcome To Our Blog</h2>
   <div class="login-form container border border-secondary rounded p-3">{% crispy form %}</div>
+  <p class="alert alert-info text-center mt-4">
+    Haven't signed up yet? <a href="{% url "users:signup" %}">Click here!</a>
+  </p>
 {% endblock content %}

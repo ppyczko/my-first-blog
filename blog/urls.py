@@ -11,6 +11,8 @@ from .views import (
 )
 from users.views import LoginUserView
 
+app_name = "blog"
+
 urlpatterns = [
     path("", PostListView.as_view(), name="post_list"),
     path("post/new/", PostCreateView.as_view(), name="post_new"),
@@ -22,5 +24,4 @@ urlpatterns = [
     ),
     path("post/<int:pk>/edit/", PostUpdateView.as_view(), name="post_edit"),
     path("author/<int:pk>/", AuthorDetailView.as_view(), name="author_detail"),
-    # Redirect to login form when user isn't logged in
 ]

@@ -77,3 +77,19 @@ h4 {
 .login-form {
     max-width: 500px;
 }
+
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+}
+
+@media screen and (max-width: 600px) {
+    .page-header h1,
+    .page-header h1 a,
+    .page-header h1 a:visited,
+    .page-header h1 a:active {
+        color: #ffffff;
+        font-size: 30pt;
+        text-decoration: none;
+    }
+  }

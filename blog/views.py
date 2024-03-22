@@ -57,7 +57,7 @@ class PostCreateView(CreateView):
         return result
 
     def get_success_url(self) -> str:
-        return reverse("post_detail", kwargs={"pk": self.object.pk})
+        return reverse("blog:post_detail", kwargs={"pk": self.object.pk})
 
 
 class PostUpdateView(UpdateView):
@@ -75,7 +75,7 @@ class PostUpdateView(UpdateView):
         return result
 
     def get_success_url(self) -> str:
-        return reverse("post_detail", kwargs={"pk": self.object.pk})
+        return reverse("blog:post_detail", kwargs={"pk": self.object.pk})
 
 
 class AuthorDetailView(DetailView):

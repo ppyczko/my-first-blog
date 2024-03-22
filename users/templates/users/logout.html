@@ -1,6 +1,8 @@
 {% extends "blog/base.html" %}
 {% block content %}
   <h2 class="alert alert-info">
-    You have logged out successfully. To login again, <a href="{% url 'users:login' %}">click here</a>
+    You have logged out successfully.
+    <br>
+    To login again, <a href="{% url 'users:login' %}">click here</a>
   </h2>
 {% endblock content %}
