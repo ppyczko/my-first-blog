@@ -80,4 +80,4 @@ class Comment(MPTTModel):
         order_insertion_by = ["created_date"]
 
     def __str__(self):
-        return "Comment {} by {}".format(self.body, self.author)
+        return "Comment on {} by {}".format(self.post, self.author)
