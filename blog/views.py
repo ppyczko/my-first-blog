@@ -7,8 +7,8 @@ from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .filters import PostFilter
-from .forms import PostForm
-from .models import Post, PostRecord
+from .forms import PostForm, CommentForm
+from .models import Post, PostRecord, Comment
 
 
 class FilteredListView(ListView):
@@ -46,6 +46,8 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["related_posts"] = self.object.posts_related.all()
+        context["comment_form"] = CommentForm
+        context["comments"] = self.object.comments.all()
         return context
 
 
@@ -109,3 +111,20 @@ class CategoryListView(ListView):
         context = super().get_context_data(**kwargs)
         context["category"] = self.kwargs["category"]
         return context
+
+
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        form.instance.post = Post.objects.get(pk=self.kwargs["pk"])
+        form.instance.author = self.request.user
+        form.instance.created_date = timezone.now()
+        if "parent" in self.kwargs:
+            form.instance.parent = Comment.objects.get(pk=self.kwargs["parent"])
+        result = super().form_valid(form)
+        return result
+
+    def get_success_url(self) -> str:
+        return reverse("blog:post_detail", kwargs={"pk": self.kwargs["pk"]})

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django_tables2",
     "django_filters",
     "users.apps.UsersConfig",
+    "mptt",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"

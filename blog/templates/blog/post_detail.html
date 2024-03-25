@@ -1,4 +1,6 @@
 {% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% load mptt_tags %}
 {% block content %}
   <article class="post">
     <aside class="actions">
@@ -26,4 +28,62 @@
       <hr>
     {% endfor %}
   {% endif %}
+  <div class="d-flex mt-4">
+    <h3 class="mr-3">Comments</h3>
+    {% if user.is_authenticated %}
+      <p>
+        <button class="btn btn-secondary btn-sm"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseForm"
+                aria-expanded="false"
+                aria-controls="collapseForm">+</button>
+      </p>
+    {% endif %}
+  </div>
+  <div id="collapseForm" class="collapse">
+    <form method="post"
+          action="{% url 'blog:comment_new' pk=post.pk %}"
+          class="p-3 bg-light rounded">
+      {% csrf_token %}
+      {{ comment_form|crispy }}
+      <input type="submit" value="SEND!" class="btn btn-secondary w-100" />
+    </form>
+  </div>
+  <hr>
+  <div class="root">
+    {% recursetree comments %}
+    <div>
+      <div class="border border-dark rounded p-3 bg-light mb-2">
+        <p class="text-muted mb-2">{{ node.author }} - {{ node.created_date }}</p>
+        <p class="mb-0">{{ node.body }}</p>
+        {% if user.is_authenticated %}
+          <p class="d-flex justify-content-end mb-0">
+            <button class="btn btn-secondary btn-sm"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseForm{{ node.pk }}"
+                    aria-expanded="false"
+                    aria-controls="collapseForm{{ node.pk }}">Reply</button>
+          </p>
+        {% endif %}
+      </div>
+      <div id="collapseForm{{ node.pk }}" class="collapse">
+        <form method="post"
+              action="{% url 'blog:comment_new_child' pk=post.pk parent=node.pk %}"
+              class="p-3 bg-light rounded">
+          {% csrf_token %}
+          {{ comment_form|crispy }}
+          <input type="submit" value="SEND!" class="btn btn-secondary w-100" />
+        </form>
+      </div>
+      {% if not node.is_leaf_node %}
+        <ul class="children">
+          {{ children }}
+        </ul>
+      {% endif %}
+    </div>
+  {% endrecursetree %}
+  {% if not comments %}<p class="alert alert-info">This post doesn't have any comments yet.</p>{% endif %}
+</div>
 {% endblock content %}

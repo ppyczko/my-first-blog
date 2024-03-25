@@ -8,6 +8,7 @@ from .views import (
     PostUpdateView,
     AuthorDetailView,
     CategoryListView,
+    CommentCreateView,
 )
 from users.views import LoginUserView
 
@@ -17,6 +18,12 @@ urlpatterns = [
     path("", PostListView.as_view(), name="post_list"),
     path("post/new/", PostCreateView.as_view(), name="post_new"),
     path("post/<int:pk>/", PostDetailView.as_view(), name="post_detail"),
+    path("comment/<int:pk>/", CommentCreateView.as_view(), name="comment_new"),
+    path(
+        "comment/<int:pk>/parent/<int:parent>/",
+        CommentCreateView.as_view(),
+        name="comment_new_child",
+    ),
     path(
         "post/category/<str:category>/",
         CategoryListView.as_view(),

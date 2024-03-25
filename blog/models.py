@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Post(models.Model):
@@ -60,3 +61,20 @@ class PostRecord(models.Model):
 
     def __str__(self):
         return f"{self.post} - {self.user}"
+
+
+class Comment(MPTTModel):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    body = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    active = models.BooleanField(default=False)
+    parent = TreeForeignKey(
+        "self", on_delete=models.CASCADE, null=True, blank=True, related_name="children"
+    )
+
+    class MPTTMeta:
+        order_insertion_by = ["created_date"]
+
+    def __str__(self):
+        return "Comment {} by {}".format(self.body, self.author)

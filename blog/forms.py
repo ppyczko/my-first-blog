@@ -2,7 +2,7 @@ from django import forms
 from crispy_forms.helper import FormHelper, Layout
 from crispy_forms.layout import Submit, Row, Column, Field, Button
 
-from .models import Post
+from .models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
@@ -24,3 +24,21 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ("title", "text", "category")
+
+
+class CommentForm(forms.ModelForm):
+    body = forms.CharField(
+        label="",
+        widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Comment here !",
+                "rows": 3,
+                "cols": 50,
+            }
+        ),
+    )
+
+    class Meta:
+        model = Comment
+        fields = ["body"]
