@@ -4,20 +4,23 @@ from django.utils import timezone
 from mptt.models import MPTTModel, TreeForeignKey
 
 
-class Post(models.Model):
-    categories = (
-        ("stories", "Stories"),
-        ("films", "Films"),
-        ("books", "Books"),
-        ("sports", "Sports"),
-        ("fashion", "Fashion"),
-        ("politics", "Politics"),
-    )
+class Category(models.Model):
+    category = models.CharField(max_length=50)
 
+    class Meta:
+        verbose_name_plural = "categories"
+
+    def __str__(self):
+        return self.category
+
+
+class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
-    category = models.CharField(max_length=15, choices=categories, default="stories")
+    category = models.ForeignKey(
+        Category, on_delete=models.RESTRICT, null=True, blank=True
+    )
     related_posts = models.ManyToManyField(
         to="self",
         symmetrical=False,

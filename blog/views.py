@@ -8,7 +8,7 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .filters import PostFilter
 from .forms import PostForm, CommentForm
-from .models import Post, PostRecord, Comment
+from .models import Post, PostRecord, Comment, Category
 
 
 class FilteredListView(ListView):
@@ -98,13 +98,14 @@ class AuthorDetailView(DetailView):
 class CategoryListView(ListView):
     model = Post
     template_name = "blog/category_detail.html"
-    pk_url_kwarg = "category"
     context_object_name = "posts_by_category"
     paginate_by = 10
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = Post.objects.filter(category=self.kwargs["category"])
+        print(self.kwargs)
+        category = Category.objects.get(category=self.kwargs["category"])
+        queryset = Post.objects.filter(category=category)
         return queryset
 
     def get_context_data(self, **kwargs):
