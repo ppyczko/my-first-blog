@@ -3,6 +3,7 @@
 {% load mptt_tags %}
 {% load humanize %}
 {% load blog_extras %}
+{% load i18n %}
 {% block content %}
   <article class="post">
     <aside class="actions">
@@ -22,11 +23,11 @@
     </p>
     <p>{{ post.text|linebreaksbr }}</p>
     <p class="text-muted">
-      Author: <a href="{% url 'blog:author_detail' pk=post.author.pk %}">{{ user.first_name|format_author_name:user.last_name }}</a>
+      {% translate "Author:" %} <a href="{% url 'blog:author_detail' pk=post.author.pk %}">{{ user.first_name|format_author_name:user.last_name }}</a>
     </p>
   </article>
   {% if related_posts %}
-    <h3>Related Posts</h3>
+    <h3>{% translate "Related Posts" %}</h3>
     <hr>
     {% for rpost in related_posts %}
       <a href="{% url "blog:post_detail" pk=rpost.related_post.pk %}">{{ rpost.related_post }}</a>
@@ -34,7 +35,7 @@
     {% endfor %}
   {% endif %}
   <div class="d-flex mt-4">
-    <h3 class="mr-3">Comments</h3>
+    <h3 class="mr-3">{% translate "Comments" %}</h3>
     {% if user.is_authenticated %}
       <p>
         <button class="btn btn-secondary btn-sm"
@@ -52,7 +53,9 @@
           class="p-3 bg-light rounded">
       {% csrf_token %}
       {{ comment_form|crispy }}
-      <input type="submit" value="SEND!" class="btn btn-secondary w-100" />
+      <input type="submit"
+             value="{% translate "SEND!" %}"
+             class="btn btn-secondary w-100" />
     </form>
   </div>
   <hr>
@@ -79,7 +82,9 @@
               class="p-3 bg-light rounded">
           {% csrf_token %}
           {{ comment_form|crispy }}
-          <input type="submit" value="SEND!" class="btn btn-secondary w-100" />
+          <input type="submit"
+                 value="{% translate "SEND!" %}"
+                 class="btn btn-secondary w-100" />
         </form>
       </div>
       {% if not node.is_leaf_node %}
@@ -89,7 +94,9 @@
       {% endif %}
     </div>
   {% endrecursetree %}
-  {% if not comments %}<p class="alert alert-info">This post doesn't have any comments yet.</p>{% endif %}
+  {% if not comments %}
+    <p class="alert alert-info">{% translate "This post doesn't have any comments yet." %}</p>
+  {% endif %}
   <div class="mt-4">
     <h3>Latest posts from the {{ post.category }} category</h3>
     <hr>

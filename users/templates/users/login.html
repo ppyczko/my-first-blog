@@ -1,13 +1,14 @@
 {# djlint:off H030, H031 #}
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 {% block content %}
-  <h2 class="text-center mb-3">Welcome To Our Blog</h2>
+  <h2 class="text-center mb-3">{% translate "Welcome To Our Blog" %}</h2>
   <div class="login-form container border border-secondary rounded p-3">{% crispy form %}</div>
   <p class="alert alert-info text-center mt-4">
-    Haven't signed up yet? <a href="{% url "users:signup" %}">Click here!</a>
+    {% translate "Haven't signed up yet?" %} <a href="{% url "users:signup" %}">{% translate "Click here!" %}</a>
   </p>
   <p class="text-muted">
-    Forgot your password? Reset it <a href="{% url "users:password_reset" %}">here</a>
+    {% translate "Forgot your password? Reset it" %} <a href="{% url "users:password_reset" %}">{% translate "here" %}</a>
   </p>
 {% endblock content %}

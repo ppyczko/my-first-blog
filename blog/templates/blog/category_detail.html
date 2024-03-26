@@ -1,19 +1,28 @@
 {# djlint:off H023 #}
 {% extends "blog/base.html" %}
+{% load i18n %}
 {% block content %}
   <div class="container">
-    <h2 class="text-center mb-3">Posts from the {{ category }} category</h2>
+    <h2 class="text-center mb-3">
+      {% blocktranslate with category=category %}
+      Posts from the {{ category }} category.
+      {% endblocktranslate %}
+    </h2>
     <div class="row">
       {% for post in posts_by_category %}
         <div class="col-sm-6 mb-2">
           <div class="col-12 border border-2 border-secondary rounded p-3 h-100 bg-light text-dark">
             <h5>{{ post }}</h5>
-            <p class="mb-0">Title: {{ post.title }}</p>
-            <p>Published Date: {{ post.published_date }}</p>
+            <p class="mb-0">{% translate "Title:" %} {{ post.title }}</p>
+            <p>{% translate "Published Date:" %} {{ post.published_date }}</p>
           </div>
         </div>
       {% empty %}
-        <p class="alert alert-info w-100 text-center">No existing posts for the {{ category }} category.</p>
+        <p class="alert alert-info w-100 text-center">
+          {% blocktranslate with category=category %}
+          No existing posts for the {{ category }} category.
+          {% endblocktranslate %}
+        </p>
       {% endfor %}
     </div>
   </div>

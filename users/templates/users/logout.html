@@ -1,8 +1,9 @@
 {% extends "blog/base.html" %}
+{% load i18n %}
 {% block content %}
   <h2 class="alert alert-info">
-    You have logged out successfully.
+    {% translate "You have logged out successfully." %}
     <br>
-    To login again, <a href="{% url 'users:login' %}">click here</a>
+    {% translate "To login again," %} <a href="{% url 'users:login' %}">{% translate "click here" %}</a>
   </h2>
 {% endblock content %}

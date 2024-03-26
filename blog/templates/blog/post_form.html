@@ -1,10 +1,7 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 {% block content %}
-  <h2>New post</h2>
-  {% comment %} <form method="post" class="post-form">
-    {% csrf_token %}
-    {{ form|crispy }}
-  </form> {% endcomment %}
+  <h2>{% translate "New post" %}</h2>
   {% crispy form %}
 {% endblock content %}

@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 {% load humanize %}
 {% load blog_extras %}
+{% load i18n %}
 {% block content %}
   <div class="dropdown mb-4">
     <button class="btn btn-secondary dropdown-toggle w-100"
@@ -10,12 +11,14 @@
             id="dropdownMenuButton"
             data-toggle="dropdown"
             aria-haspopup="true"
-            aria-expanded="false">Filter Posts</button>
+            aria-expanded="false">{% translate "Filter Posts" %}</button>
     <div class="dropdown-menu w-100 m-0 p-0"
          aria-labelledby="dropdownMenuButton">
       <form method="get" class="p-3 bg-light">
         {{ filterset.form|crispy }}
-        <input type="submit" value="SEND!" class="btn btn-secondary w-100" />
+        <input type="submit"
+               value="{% translate "SEND!" %}"
+               class="btn btn-secondary w-100" />
       </form>
     </div>
   </div>
@@ -33,23 +36,23 @@
         </p>
         <p>{{ post.text|linebreaksbr }}</p>
         <p class="text-muted">
-          Author: <a href="{% url 'blog:author_detail' pk=post.author.pk %}">{{ user.first_name|format_author_name:user.last_name }}</a>
+          {% translate "Author:" %} <a href="{% url 'blog:author_detail' pk=post.author.pk %}">{{ user.first_name|format_author_name:user.last_name }}</a>
         </p>
       </article>
     {% empty %}
-      <p class="alert alert-info">No posts found with the matching criteria.</p>
+      <p class="alert alert-info">{% translate "No posts found with the matching criteria." %}</p>
     {% endfor %}
   </div>
   <div class="pagination mb-4">
     <span class="step-links">
       {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <a href="?page=1">&laquo; {% translate "first" %}</a>
+        <a href="?page={{ page_obj.previous_page_number }}">{% translate "previous" %}</a>
       {% endif %}
-      <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+      <span class="current">{% translate "Page" %} {{ page_obj.number }} {% translate "of" %} {{ page_obj.paginator.num_pages }}.</span>
       {% if page_obj.has_next %}
-        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">next</a>
-        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">{% translate "next" %}</a>
+        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}">{% translate "last" %} &raquo;</a>
       {% endif %}
     </span>
   </div>
