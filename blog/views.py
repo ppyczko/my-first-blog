@@ -34,8 +34,8 @@ class PostListView(LoginRequiredMixin, FilteredListView):
         queryset = super().get_queryset()
         queryset = (
             queryset.filter(published_date__lte=timezone.now())
-            .order_by("published_date")
-            .select_related("author")
+            .order_by("-published_date")
+            .select_related("author", "category")
         )
         return queryset
 
@@ -47,7 +47,7 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["related_posts"] = self.object.posts_related.all()
         context["comment_form"] = CommentForm
-        context["comments"] = self.object.comments.all()
+        context["comments"] = self.object.comments.all().select_related("author")
         return context
 
 

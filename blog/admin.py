@@ -5,8 +5,8 @@ from .models import Category, Comment, Post, PostRecord, RelatedPost
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ["title", "author", "category"]
-    list_filter = ["title", "author", "category"]
+    list_display = ["title", "author", "category", "published_date"]
+    list_filter = ["title", "author", "category", "published_date"]
 
 
 @admin.register(Category)

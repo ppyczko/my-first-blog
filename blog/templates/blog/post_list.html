@@ -1,6 +1,8 @@
 {# djlint:off H023 #}
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
+{% load humanize %}
+{% load blog_extras %}
 {% block content %}
   <div class="dropdown mb-4">
     <button class="btn btn-secondary dropdown-toggle w-100"
@@ -21,7 +23,7 @@
     {% for post in object_list %}
       <article class="post">
         <time class="date">
-          {{ post.published_date }}
+          {{ post.published_date|naturaltime }}
         </time>
         <h2 class="mb-1">
           <a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a>
@@ -31,7 +33,7 @@
         </p>
         <p>{{ post.text|linebreaksbr }}</p>
         <p class="text-muted">
-          Author: <a href="{% url 'blog:author_detail' pk=post.author.pk %}">{{ post.author|linebreaksbr }}</a>
+          Author: <a href="{% url 'blog:author_detail' pk=post.author.pk %}">{{ user.first_name|format_author_name:user.last_name }}</a>
         </p>
       </article>
     {% empty %}

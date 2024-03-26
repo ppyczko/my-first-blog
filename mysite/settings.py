@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django_filters",
     "users.apps.UsersConfig",
     "mptt",
+    "django.contrib.humanize",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
