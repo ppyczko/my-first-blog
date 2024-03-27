@@ -2,20 +2,24 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from mptt.models import MPTTModel, TreeForeignKey
+from django.utils.translation import gettext_lazy as _
 
 
 class Category(models.Model):
     category = models.CharField(max_length=50)
 
     class Meta:
-        verbose_name_plural = "categories"
+        verbose_name_plural = "Categories"
+        verbose_name = _("Categories")
 
     def __str__(self):
         return self.category
 
 
 class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("author")
+    )
     title = models.CharField(max_length=200)
     text = models.TextField()
     category = models.ForeignKey(

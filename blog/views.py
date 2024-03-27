@@ -5,6 +5,14 @@ from django.db.models.query import QuerySet
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from extra_views import (
+    ModelFormSetView,
+    InlineFormSetFactory,
+    CreateWithInlinesView,
+    UpdateWithInlinesView,
+)
+from django.core.exceptions import ValidationError
+from django.forms import BaseModelFormSet
 
 from .filters import PostFilter
 from .forms import PostForm, CommentForm
@@ -38,6 +46,55 @@ class PostListView(LoginRequiredMixin, FilteredListView):
             .select_related("author", "category")
         )
         return queryset
+
+
+# Formsets
+class PostBaseFormSet(BaseModelFormSet):
+
+    def clean(self):
+        if any(self.errors):
+            return
+        for form in self.forms:
+            author = form.cleaned_data.get("author")
+            print(author, self.kwargs["user"])
+            if author != self.kwargs["user"]:
+                raise ValidationError("The users must be the same")
+
+
+class PostFormSetview(ModelFormSetView):
+    model = Post
+    fields = ("title", "category", "text")
+    template_name = "blog/post_formset.html"
+    factory_kwargs = {"extra": 0}
+    formset_class = PostBaseFormSet
+
+    # def get_formset_kwargs(self):
+    #     kwargs = super(PostFormSetview, self).get_formset_kwargs()
+    #     kwargs["user"] = self.request.user
+    #     return kwargs
+
+    def get_queryset(self):
+        return super().get_queryset().filter(author=self.request.user)
+
+    def get_success_url(self):
+        return reverse("blog:post_list")
+
+
+# Ex 2
+class PostInline(InlineFormSetFactory):
+    model = Post
+    fields = ("title", "text")
+    factory_kwargs = {"extra": 0, "can_order": False, "can_delete": False}
+
+
+class EditCategoryPosts(UpdateWithInlinesView):
+    model = Category
+    inlines = [PostInline]
+    template_name = "blog/category_formset.html"
+    fields = ("category",)
+
+    def get_success_url(self):
+        return reverse("blog:post_list")
 
 
 class PostDetailView(DetailView):

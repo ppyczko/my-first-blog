@@ -9,6 +9,8 @@ from .views import (
     AuthorDetailView,
     CategoryListView,
     CommentCreateView,
+    PostFormSetview,
+    EditCategoryPosts,
 )
 from users.views import LoginUserView
 
@@ -31,4 +33,11 @@ urlpatterns = [
     ),
     path("post/<int:pk>/edit/", PostUpdateView.as_view(), name="post_edit"),
     path("author/<int:pk>/", AuthorDetailView.as_view(), name="author_detail"),
+    # Form sets
+    path("post/formset/", PostFormSetview.as_view(), name="post-formset"),
+    path(
+        "category/formset/<int:pk>/",
+        EditCategoryPosts.as_view(),
+        name="category-formset",
+    ),
 ]

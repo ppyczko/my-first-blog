@@ -36,7 +36,7 @@
         </p>
         <p>{{ post.text|linebreaksbr }}</p>
         <p class="text-muted">
-          {% translate "Author:" %} <a href="{% url 'blog:author_detail' pk=post.author.pk %}">{{ user.first_name|format_author_name:user.last_name }}</a>
+          {% translate "Author:" %} <a href="{% url 'blog:author_detail' pk=post.author.pk %}">{{ post.author.first_name|format_author_name:post.author.last_name }}</a>
         </p>
       </article>
     {% empty %}

@@ -1,0 +1,21 @@
+{# djlint:off H023 #}
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ formset|crispy }}
+    <input type="submit" value="Submit" />
+  </form>
+  {% comment %} {% for form in formset %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input type="submit" value="Submit" />
+      {% for dict in form.errors %}
+        {% for error in dict.values %}{{ error }}{% endfor %}
+      {% endfor %}
+    </form>
+  {% endfor %} {% endcomment %}
+{% endblock content %}
