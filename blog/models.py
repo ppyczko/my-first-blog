@@ -9,8 +9,8 @@ class Category(models.Model):
     category = models.CharField(max_length=50)
 
     class Meta:
-        verbose_name_plural = "Categories"
-        verbose_name = _("Categories")
+        verbose_name = _("Category")
+        verbose_name_plural = _("Categories")
 
     def __str__(self):
         return self.category
@@ -41,6 +41,10 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = _("Post")
+        verbose_name_plural = _("Posts")
+
 
 class RelatedPost(models.Model):
     main_post = models.ForeignKey(
@@ -59,6 +63,8 @@ class RelatedPost(models.Model):
                 "main_post", "related_post", name="unique_mainpost_relatedpost"
             )
         ]
+        verbose_name = _("Related Post")
+        verbose_name_plural = _("Related Posts")
 
 
 class PostRecord(models.Model):
@@ -68,6 +74,10 @@ class PostRecord(models.Model):
 
     def __str__(self):
         return f"{self.post} - {self.user}"
+
+    class Meta:
+        verbose_name = _("Post Record")
+        verbose_name_plural = _("Post Records")
 
 
 class Comment(MPTTModel):
@@ -82,6 +92,8 @@ class Comment(MPTTModel):
 
     class MPTTMeta:
         order_insertion_by = ["created_date"]
+        verbose_name = _("Comment")
+        verbose_name_plural = _("Comments")
 
     def __str__(self):
         return "Comment on {} by {}".format(self.post, self.author)

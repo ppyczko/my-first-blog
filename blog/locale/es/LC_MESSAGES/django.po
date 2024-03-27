@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 16:17+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+#: models.py:12
+msgid "Category"
+msgstr "Categorias"
+
+#: models.py:13
+msgid "Categories"
+msgstr "Categorias"
+
+#: models.py:21
+msgid "author"
+msgstr "autor"
+
+#: models.py:45
+msgid "Post"
+msgstr "Publicación"
+
+#: models.py:46
+msgid "Posts"
+msgstr "Publicaciones"
+
+#: models.py:66
+msgid "Related Post"
+msgstr "Publicación Relacionada"
+
+#: models.py:67 templates/blog/post_detail.html:30
+msgid "Related Posts"
+msgstr "Publicaciones Relacionadas"
+
+#: models.py:79
+msgid "Post Record"
+msgstr "Registro Publicacion"
+
+#: models.py:80
+msgid "Post Records"
+msgstr "Registros Publicaciones"
+
+#: models.py:95
+msgid "Comment"
+msgstr "Comentario"
+
+#: models.py:96 templates/blog/post_detail.html:38
+msgid "Comments"
+msgstr "Comentarios"
+
+#: templates/blog/author_detail.html:5
+msgid "Author details"
+msgstr "Detalles del autor"
+
+#: templates/blog/author_detail.html:6 templates/blog/post_detail.html:26
+#: templates/blog/post_list.html:39
+msgid "Author:"
+msgstr "Autor:"
+
+#: templates/blog/author_detail.html:7
+msgid "Email:"
+msgstr "Correo electrónico:"
+
+#: templates/blog/author_detail.html:9
+msgid "Your Posts"
+msgstr "Tus Publicaciones"
+
+#: templates/blog/author_detail.html:16 templates/blog/category_detail.html:16
+msgid "Title:"
+msgstr "Título:"
+
+#: templates/blog/author_detail.html:17 templates/blog/category_detail.html:17
+msgid "Published Date:"
+msgstr "Fecha de publicación:"
+
+#: templates/blog/author_detail.html:21
+msgid "This author hasn't published any posts yet."
+msgstr "Este autor no ha publicado ninguna publicación todavía."
+
+#: templates/blog/base.html:10 templates/blog/base.html:23
+msgid "Patryk's blog"
+msgstr "El Blog De Patryk"
+
+#: templates/blog/category_detail.html:7
+#, python-format
+msgid ""
+"\n"
+"      Posts from the %(category)s category.\n"
+"      "
+msgstr ""
+"\n"
+"      Publicaciones de la categoria %(category)s.\n"
+"      "
+
+#: templates/blog/category_detail.html:22
+#, python-format
+msgid ""
+"\n"
+"          No existing posts for the %(category)s category.\n"
+"          "
+msgstr ""
+"\n"
+"          No existen publicaciones de la categoria %(category)s.\n"
+"          "
+
+#: templates/blog/post_detail.html:57 templates/blog/post_detail.html:86
+#: templates/blog/post_list.html:20
+msgid "SEND!"
+msgstr "ENVIA!"
+
+#: templates/blog/post_detail.html:98
+msgid "This post doesn't have any comments yet."
+msgstr "Esta publicación aún no tiene ningún comentario."
+
+#: templates/blog/post_form.html:5
+msgid "New post"
+msgstr "Nueva publicación"
+
+#: templates/blog/post_list.html:14
+msgid "Filter Posts"
+msgstr "Filtrar publicaciones"
+
+#: templates/blog/post_list.html:43
+msgid "No posts found with the matching criteria."
+msgstr "No se encontraron publicaciones con los criterios coincidentes."
+
+#: templates/blog/post_list.html:49
+msgid "first"
+msgstr "Primera"
+
+#: templates/blog/post_list.html:50
+msgid "previous"
+msgstr "Anterior"
+
+#: templates/blog/post_list.html:52
+msgid "Page"
+msgstr "Página"
+
+#: templates/blog/post_list.html:52
+msgid "of"
+msgstr "de"
+
+#: templates/blog/post_list.html:54
+msgid "next"
+msgstr "Siguiente"
+
+#: templates/blog/post_list.html:55
+msgid "last"
+msgstr "Última"

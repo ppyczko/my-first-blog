@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models.query import QuerySet
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from extra_views import (
     ModelFormSetView,
@@ -45,6 +45,7 @@ class PostListView(LoginRequiredMixin, FilteredListView):
             .order_by("-published_date")
             .select_related("author", "category")
         )
+        print(translation)
         return queryset
 
 

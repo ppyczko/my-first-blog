@@ -23,4 +23,5 @@ urlpatterns = [
     path("", include("blog.urls")),
     path("", include("users.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]

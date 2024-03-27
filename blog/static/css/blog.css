@@ -83,7 +83,7 @@ h4 {
     left: auto;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     .page-header h1,
     .page-header h1 a,
     .page-header h1 a:visited,
